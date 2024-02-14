@@ -5,46 +5,71 @@
 abstract class H5PMetadata {
 
   private static $fields = array(
-    'title' => array(
-      'type' => 'text',
-      'maxLength' => 255
-    ),
-    'authors' => array(
-      'type' => 'json'
-    ),
-    'changes' => array(
-      'type' => 'json'
-    ),
-    'source' => array(
-      'type' => 'text',
-      'maxLength' => 255
-    ),
-    'license' => array(
-      'type' => 'text',
-      'maxLength' => 32
-    ),
-    'licenseVersion' => array(
-      'type' => 'text',
-      'maxLength' => 10
-    ),
-    'licenseExtras' => array(
-      'type' => 'text',
-      'maxLength' => 5000
-    ),
-    'authorComments' => array(
-      'type' => 'text',
-      'maxLength' => 5000
-    ),
-    'yearFrom' => array(
-      'type' => 'int'
-    ),
-    'yearTo' => array(
-      'type' => 'int'
-    ),
-    'defaultLanguage' => array(
-      'type' => 'text',
-      'maxLength' => 32,
-    )
+      'title' => array(
+          'type' => 'text',
+          'maxLength' => 255
+      ),
+      'authors' => array(
+          'type' => 'json'
+      ),
+      'changes' => array(
+          'type' => 'json'
+      ),
+      'source' => array(
+          'type' => 'text',
+          'maxLength' => 255
+      ),
+      'royaltyType' => array(
+          'type' => 'text',
+          'maxLength' => 255
+      ),
+      'royaltyTermsViews' => array(
+          'type' => 'text',
+          'maxLength' => 255
+      ),
+      'currency' => array(
+          'type' => 'text',
+          'maxLength' => 255
+      ),
+      'amount' => array(
+          'type' => 'decimal',
+          'scale' => 2
+      ),
+      'copyrightNotice' => array(
+          'type' => 'text',
+          'maxLength' => 10000
+      ),
+      'creditText' => array(
+          'type' => 'text',
+          'maxLength' => 10000
+      ),
+      'license' => array(
+          'type' => 'text',
+          'maxLength' => 32
+      ),
+      'licenseVersion' => array(
+          'type' => 'text',
+          'maxLength' => 10
+      ),
+      'licenseExtras' => array(
+          'type' => 'text',
+          'maxLength' => 5000
+      ),
+      'authorComments' => array(
+          'type' => 'text',
+          'maxLength' => 5000
+      ),
+      'yearFrom' => array(
+          'type' => 'int'
+      ),
+      'yearTo' => array(
+          'type' => 'int'
+      ),
+      'defaultLanguage' => array(
+          'type' => 'text',
+          'maxLength' => 32,
+      ),
+
   );
 
   /**
@@ -56,17 +81,23 @@ abstract class H5PMetadata {
   public static function toJSON($content) {
     // Note: deliberatly creating JSON string "manually" to improve performance
     return
-      '{"title":' . (isset($content->title) ? json_encode($content->title) : 'null') .
-      ',"authors":' . (isset($content->authors) ? $content->authors : 'null') .
-      ',"source":' . (isset($content->source) ? '"' . $content->source . '"' : 'null') .
-      ',"license":' . (isset($content->license) ? '"' . $content->license . '"' : 'null') .
-      ',"licenseVersion":' . (isset($content->license_version) ? '"' . $content->license_version . '"' : 'null') .
-      ',"licenseExtras":' . (isset($content->license_extras) ? json_encode($content->license_extras) : 'null') .
-      ',"yearFrom":' . (isset($content->year_from) ? $content->year_from : 'null') .
-      ',"yearTo":' .  (isset($content->year_to) ? $content->year_to : 'null') .
-      ',"changes":' . (isset($content->changes) ? $content->changes : 'null') .
-      ',"defaultLanguage":' . (isset($content->default_language) ? '"' . $content->default_language . '"' : 'null') .
-      ',"authorComments":' . (isset($content->author_comments) ? json_encode($content->author_comments) : 'null') . '}';
+        '{"title":' . (isset($content->title) ? json_encode($content->title) : 'null') .
+        ',"authors":' . (isset($content->authors) ? $content->authors : 'null') .
+        ',"source":' . (isset($content->source) ? '"' . $content->source . '"' : 'null') .
+        ',"license":' . (isset($content->license) ? '"' . $content->license . '"' : 'null') .
+        ',"licenseVersion":' . (isset($content->license_version) ? '"' . $content->license_version . '"' : 'null') .
+        ',"licenseExtras":' . (isset($content->license_extras) ? json_encode($content->license_extras) : 'null') .
+        ',"yearFrom":' . (isset($content->year_from) ? $content->year_from : 'null') .
+        ',"yearTo":' .  (isset($content->year_to) ? $content->year_to : 'null') .
+        ',"changes":' . (isset($content->changes) ? $content->changes : 'null') .
+        ',"defaultLanguage":' . (isset($content->default_language) ? '"' . $content->default_language . '"' : 'null') .
+        ',"authorComments":' . (isset($content->author_comments) ? json_encode($content->author_comments) : 'null') .
+        ',"royaltyType":' . (isset($content->royaltyType) ? '"' . $content->royaltyType . '"' : 'null') .
+        ',"royaltyTermsViews":' . (isset($content->royaltyTermsViews) ? '"' . $content->royaltyTermsViews . '"' : 'null') .
+        ',"currency":' . (isset($content->currency) ? '"' . $content->currency . '"' : 'null') .
+        ',"amount":' .  (isset($content->amount) ? $content->amount : 'null') .
+        ',"copyrightNotice":' . (isset($content->copyrightNotice) ? '"' . $content->copyrightNotice . '"' : 'null') .
+        ',"creditText":' . (isset($content->creditText) ? '"' . $content->creditText . '"' : 'null') . '}';
   }
 
   /**
@@ -120,6 +151,16 @@ abstract class H5PMetadata {
         case 'json':
           $value = ($value !== null) ? json_encode($value) : null;
           $types[] = '%s';
+          break;
+        case 'decimal':
+          if ($value !== null) {
+            // Set scale for the decimal field
+            $scale = $config['scale'] ?? 2;
+
+            // Format the decimal value scale
+            $value = number_format((float) $value, $scale, '.', '');
+          }
+          $types[] = '%f';
           break;
       }
 
