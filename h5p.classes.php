@@ -4693,6 +4693,7 @@ class H5PContentValidator {
             'name' => 'amount',
             'type' => 'number',
             'label' => $this->h5pF->t('Amount'),
+            'decimals' => 3,
             'optional' => TRUE
         ),
         (object) array(
